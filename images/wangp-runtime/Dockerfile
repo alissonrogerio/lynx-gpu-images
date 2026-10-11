@@ -1,9 +1,9 @@
 # LYNX GPU runtime for WanGP-based jobs — GENERIC components only.
-# Contains: NVIDIA CUDA 12.8.1 + cuDNN runtime base, apt tools (git, ffmpeg, rsync, build tools), uv, a Python 3.11 venv
+# Contains: NVIDIA CUDA 12.8.1 minimal base (torch cu128 wheels ship their own CUDA/cuDNN libs), apt tools (git, ffmpeg, rsync, build tools), uv, a Python 3.11 venv
 # with torch 2.10.0 (cu128) and the third-party PyPI packages listed in WanGP's requirements.txt at the pinned commit.
 # Does NOT contain: WanGP's own source (custom license; cloned at job start), model weights, credentials, or any
 # private/production data.
-FROM nvidia/cuda:12.8.1-cudnn-runtime-ubuntu22.04
+FROM nvidia/cuda:12.8.1-base-ubuntu22.04
 
 ARG UV_VERSION=0.12.18
 ARG WANGP_SHA=738fca1a05b7a39ea9d4bc5ac15989893d30a13e
