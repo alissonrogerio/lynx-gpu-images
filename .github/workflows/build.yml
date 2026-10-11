@@ -32,6 +32,9 @@ jobs:
             --label org.opencontainers.image.description="Generic CUDA 12.8 + torch 2.10 runtime for WanGP-based jobs (no WanGP code, no weights, no data)" \
             images/wangp-runtime
           docker push $IMG:$TAG
+          # immutable per-commit tag: pin THIS in jobs (the moving tag can change content; warm-host caching keys on it)
+          docker tag $IMG:$TAG $IMG:$TAG-${GITHUB_SHA::7}
+          docker push $IMG:$TAG-${GITHUB_SHA::7}
           docker inspect --format '{{index .RepoDigests 0}}' $IMG:$TAG | tee digest.txt
           docker image ls $IMG
       - uses: actions/upload-artifact@v4
